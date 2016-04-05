@@ -25,15 +25,25 @@ namespace baymax_connection_simulator
         public MainWindow()
         {
             InitializeComponent();
-
-            socket = new WebSocket("ws://10.70.0.46/", "", null, null, "", "//baymax", WebSocketVersion.None, null);
+            string userName = "baymax";
+            string userPassword = "baymax";
+            string authInfo = userName + ":" + userPassword;
+            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            KeyValuePair<string, string> pair = new KeyValuePair<string, string>("Authorization", "Basic " + authInfo);
+            socket = new WebSocket("ws://baymax.severi.dy.fi:8080/", "", null, new List<KeyValuePair<string, string>> { pair }, "", "//baymax", WebSocketVersion.None, null);
             socket.Opened += Socket_Opened;
+            socket.Error += Socket_Error;
             socket.Open();
+        }
+
+        private void Socket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
         }
 
         private void Socket_Opened(object sender, EventArgs e)
         {
-
+            MessageBox.Show("socket connected");
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
