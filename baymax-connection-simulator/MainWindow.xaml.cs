@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebSocket4Net;
+using NanoMessageBus.Serialization;
 
 namespace baymax_connection_simulator
 {
@@ -22,6 +23,7 @@ namespace baymax_connection_simulator
     public partial class MainWindow : Window
     {
         WebSocket socket;
+        BaymaxProtocol protocol;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,9 +33,14 @@ namespace baymax_connection_simulator
             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
             KeyValuePair<string, string> pair = new KeyValuePair<string, string>("Authorization", "Basic " + authInfo);
             socket = new WebSocket("ws://baymax.severi.dy.fi:8080/", "", null, new List<KeyValuePair<string, string>> { pair }, "", "//baymax", WebSocketVersion.None, null);
-            socket.Opened += Socket_Opened;
-            socket.Error += Socket_Error;
+            protocol = new BaymaxProtocol(socket);
             socket.Open();
+
+        }
+
+        private void Socket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            MessageBox.Show("Vastaan otettiin uusi viesti " + e.Message);
         }
 
         private void Socket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
