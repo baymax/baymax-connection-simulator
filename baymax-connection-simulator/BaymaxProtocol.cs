@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Google.Protobuf;
 using System.Windows;
 using System.IO;
+using Google.Protobuf.WellKnownTypes;
 
 namespace baymax_connection_simulator
 {
@@ -54,6 +55,14 @@ namespace baymax_connection_simulator
                 trunkState(this, new ValueSetEventArgs() { Id = 14, Value = state });
             }
         }*/
+
+        private ulong getDateInSeconds()
+        {
+            DateTime dt = DateTime.Now;
+            DateTime dtStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            long ticks = dt.Ticks - dtStart.Ticks;
+            return (ulong)ticks / TimeSpan.TicksPerSecond;
+        }
 
         private void raiseSuspensionStateChanged(uint value)
         {
@@ -134,6 +143,7 @@ namespace baymax_connection_simulator
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 1;
                 buff.ValueSettedSubCommand.OtherValue = value;
+                buff.ValueSettedSubCommand.DateSeconds = getDateInSeconds();
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -156,7 +166,8 @@ namespace baymax_connection_simulator
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 4;
-                buff.ValueSettedSubCommand.OtherValue = value;                
+                buff.ValueSettedSubCommand.OtherValue = value;
+                buff.ValueSettedSubCommand.DateSeconds = getDateInSeconds();
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -185,6 +196,7 @@ namespace baymax_connection_simulator
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 6;
                 buff.ValueSettedSubCommand.OtherValue = value;
+                buff.ValueSettedSubCommand.DateSeconds = getDateInSeconds();
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -219,6 +231,7 @@ namespace baymax_connection_simulator
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 9;
                 buff.ValueSettedSubCommand.VoltageValue = value;
+                buff.ValueSettedSubCommand.DateSeconds = getDateInSeconds();
                 _suspensionMode = value;
                 byte[] data;
                 using (var ms = new MemoryStream())
@@ -244,6 +257,7 @@ namespace baymax_connection_simulator
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 10;
                 buff.ValueSettedSubCommand.CurrentValue = value;
+                buff.ValueSettedSubCommand.DateSeconds = getDateInSeconds();
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {

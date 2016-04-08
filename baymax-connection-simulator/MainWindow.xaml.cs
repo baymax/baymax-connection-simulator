@@ -370,7 +370,6 @@ namespace baymax_connection_simulator
                 bool success = uint.TryParse(currentValueTextBlock.Text, out current);
                 if (success)
                 {
-                    MessageBox.Show("current success " + current);
                     protocol.batteryCurrent = current;
                 }
             }

@@ -21,15 +21,15 @@ public static partial class ValueSettedSubCommandReflection {
   static ValueSettedSubCommandReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CiFwcm90by9WYWx1ZVNldHRlZFN1YkNvbW1hbmQucHJvdG8ijwEKFVZhbHVl",
+          "CiFwcm90by9WYWx1ZVNldHRlZFN1YkNvbW1hbmQucHJvdG8ipAEKFVZhbHVl",
           "U2V0dGVkU3ViQ29tbWFuZBIKCgJpZBgBIAEoDRIUCgpvdGhlclZhbHVlGAIg",
           "ASgNSAASFgoMY3VycmVudFZhbHVlGAMgASgNSAASFgoMdm9sdGFnZVZhbHVl",
-          "GAQgASgNSAASGgoQdGVtcGVyYXR1cmVWYWx1ZRgFIAEoAkgAQggKBnZhbHVl",
-          "c2IGcHJvdG8z"));
+          "GAQgASgNSAASGgoQdGVtcGVyYXR1cmVWYWx1ZRgFIAEoAkgAEhMKC2RhdGVT",
+          "ZWNvbmRzGAYgASgEQggKBnZhbHVlc2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedCodeInfo(null, new pbr::GeneratedCodeInfo[] {
-          new pbr::GeneratedCodeInfo(typeof(global::ValueSettedSubCommand), global::ValueSettedSubCommand.Parser, new[]{ "Id", "OtherValue", "CurrentValue", "VoltageValue", "TemperatureValue" }, new[]{ "Values" }, null, null)
+          new pbr::GeneratedCodeInfo(typeof(global::ValueSettedSubCommand), global::ValueSettedSubCommand.Parser, new[]{ "Id", "OtherValue", "CurrentValue", "VoltageValue", "TemperatureValue", "DateSeconds" }, new[]{ "Values" }, null, null)
         }));
   }
   #endregion
@@ -57,6 +57,7 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
 
   public ValueSettedSubCommand(ValueSettedSubCommand other) : this() {
     id_ = other.id_;
+    dateSeconds_ = other.dateSeconds_;
     switch (other.ValuesCase) {
       case ValuesOneofCase.OtherValue:
         OtherValue = other.OtherValue;
@@ -128,6 +129,16 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     }
   }
 
+  /// <summary>Field number for the "dateSeconds" field.</summary>
+  public const int DateSecondsFieldNumber = 6;
+  private ulong dateSeconds_;
+  public ulong DateSeconds {
+    get { return dateSeconds_; }
+    set {
+      dateSeconds_ = value;
+    }
+  }
+
   private object values_;
   /// <summary>Enum of possible cases for the "values" oneof.</summary>
   public enum ValuesOneofCase {
@@ -163,6 +174,7 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     if (CurrentValue != other.CurrentValue) return false;
     if (VoltageValue != other.VoltageValue) return false;
     if (TemperatureValue != other.TemperatureValue) return false;
+    if (DateSeconds != other.DateSeconds) return false;
     if (ValuesCase != other.ValuesCase) return false;
     return true;
   }
@@ -174,6 +186,7 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     if (valuesCase_ == ValuesOneofCase.CurrentValue) hash ^= CurrentValue.GetHashCode();
     if (valuesCase_ == ValuesOneofCase.VoltageValue) hash ^= VoltageValue.GetHashCode();
     if (valuesCase_ == ValuesOneofCase.TemperatureValue) hash ^= TemperatureValue.GetHashCode();
+    if (DateSeconds != 0UL) hash ^= DateSeconds.GetHashCode();
     hash ^= (int) valuesCase_;
     return hash;
   }
@@ -203,6 +216,10 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
       output.WriteRawTag(45);
       output.WriteFloat(TemperatureValue);
     }
+    if (DateSeconds != 0UL) {
+      output.WriteRawTag(48);
+      output.WriteUInt64(DateSeconds);
+    }
   }
 
   public int CalculateSize() {
@@ -222,6 +239,9 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     if (valuesCase_ == ValuesOneofCase.TemperatureValue) {
       size += 1 + 4;
     }
+    if (DateSeconds != 0UL) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(DateSeconds);
+    }
     return size;
   }
 
@@ -231,6 +251,9 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     }
     if (other.Id != 0) {
       Id = other.Id;
+    }
+    if (other.DateSeconds != 0UL) {
+      DateSeconds = other.DateSeconds;
     }
     switch (other.ValuesCase) {
       case ValuesOneofCase.OtherValue:
@@ -274,6 +297,10 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
         }
         case 45: {
           TemperatureValue = input.ReadFloat();
+          break;
+        }
+        case 48: {
+          DateSeconds = input.ReadUInt64();
           break;
         }
       }
