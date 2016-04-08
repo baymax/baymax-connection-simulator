@@ -14,6 +14,70 @@ namespace baymax_connection_simulator
 {
     class BaymaxProtocol
     {
+        public event EventHandler<ValueSetEventArgs> suspensionStateChanged;
+        public event EventHandler<ValueSetEventArgs> fanSpeedChanged;
+        public event EventHandler<ValueSetEventArgs> spoilerModeChanged;
+        public event EventHandler<ValueSetEventArgs> leftDoorState;
+        public event EventHandler<ValueSetEventArgs> rigthDoorState;
+        public event EventHandler<ValueSetEventArgs> hoodState;
+        public event EventHandler<ValueSetEventArgs> trunkState;
+
+        private void raiseLeftDoorStateChanged(int state)
+        {
+            if (leftDoorState != null)
+            {
+                leftDoorState(this, new ValueSetEventArgs() { Id = 11, Value = state });
+            }
+        }
+
+        private void raiseRigthDoorStateChanged(int state)
+        {
+            if (rigthDoorState != null)
+            {
+                rigthDoorState(this, new ValueSetEventArgs() { Id = 12, Value = state });
+            }
+        }
+
+        private void raiseHoodStateChanged(int state)
+        {
+            if (hoodState != null)
+            {
+                hoodState(this, new ValueSetEventArgs() { Id = 13, Value = state });
+            }
+        }
+
+        private void raiseTrunkStateChanged(int state)
+        {
+            if (trunkState != null)
+            {
+                trunkState(this, new ValueSetEventArgs() { Id = 14, Value = state });
+            }
+        }
+
+        private void raiseSuspensionStateChanged(int value)
+        {
+            if (suspensionStateChanged != null)
+            {
+                suspensionStateChanged(this, new ValueSetEventArgs() { Id = 4, Value = value });
+            }
+        }
+
+        private void raiseFanSpeedStateChanged(int value)
+        {
+            if (fanSpeedChanged != null)
+            {
+                fanSpeedChanged(this, new ValueSetEventArgs() { Id = 1, Value = value });
+            }
+        }
+
+        private void raiseSpoilerModeChanged(int value)
+        {
+            if (spoilerModeChanged != null)
+            {
+                spoilerModeChanged(this, new ValueSetEventArgs() { Id = 6, Value = value });
+            }
+        }
+
         private WebSocket webSocket;
         public BaymaxProtocol(WebSocket socket)
         {
@@ -33,8 +97,18 @@ namespace baymax_connection_simulator
         {
             CommandBuff buff = new CommandBuff();
             buff = CommandBuff.Parser.ParseFrom(e.Data);
-            MessageBox.Show("Viesti vastaan otettu");
-            MessageBox.Show(buff.SetValueSubCommand.Id.ToString());
+            switch(buff.SetValueSubCommand.Id)
+            {
+                case 1:
+                    raiseFanSpeedStateChanged(buff.SetValueSubCommand.IValue);
+                    break;
+                case 4:
+                    raiseSuspensionStateChanged(buff.SetValueSubCommand.IValue);
+                    break;
+                case 6:
+                    raiseSpoilerModeChanged(buff.SetValueSubCommand.IValue);
+                    break;
+            }
         }
 
         private void WebSocket_Closed(object sender, EventArgs e)
@@ -132,16 +206,54 @@ namespace baymax_connection_simulator
             set;
         }
 
+        private int _batteryVoltage;
         public int batteryVoltage
         {
-            get;
-            set;
+            get
+            {
+                return _batteryVoltage;
+            }
+            set
+            {
+                _batteryVoltage = value;
+                ServerCommandBuff buff = new ServerCommandBuff();
+                buff.ValueSettedSubCommand = new ValueSettedSubCommand();
+                buff.ValueSettedSubCommand.Id = 9;
+                buff.ValueSettedSubCommand.IValue = value;
+                _suspensionMode = value;
+                byte[] data;
+                using (var ms = new MemoryStream())
+                {
+                    buff.WriteTo(ms);
+                    data = ms.ToArray();
+                }
+                webSocket.Send(data, offset: 0, length: data.Length);
+            }
         }
 
+        private int _batteryCurrent;
         public int batteryCurrent
         {
-            get;
-            set;
+            get
+            {
+                return _batteryCurrent;
+            }
+            set
+            {
+                _batteryCurrent = value;
+                ServerCommandBuff buff = new ServerCommandBuff();
+                buff.ValueSettedSubCommand = new ValueSettedSubCommand();
+                buff.ValueSettedSubCommand.Id = 10;
+                buff.ValueSettedSubCommand.IValue = value;
+                _suspensionMode = value;
+                byte[] data;
+                using (var ms = new MemoryStream())
+                {
+                    buff.WriteTo(ms);
+                    data = ms.ToArray();
+                }
+                webSocket.Send(data, offset: 0, length: data.Length);
+            }
         }
 
         public int doorState

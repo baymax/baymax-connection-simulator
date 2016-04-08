@@ -82,12 +82,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClientCommandBuff.cs" />
+    <Compile Include="ControlUiViewModel.cs" />
     <Compile Include="GetResourceSubCommand.cs" />
     <Compile Include="ManagerSubCommand.cs" />
     <Compile Include="ServerCommandBuff.cs" />
     <Compile Include="SetValueSubCommand.cs" />
     <Compile Include="SystemSubCommand.cs" />
+    <Compile Include="ValueSetEventArgs.cs" />
     <Compile Include="ValueSettedSubCommand.cs" />
+    <Compile Include="ValueUiViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
