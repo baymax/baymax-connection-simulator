@@ -22,7 +22,8 @@ namespace baymax_connection_simulator
         public event EventHandler<ValueSetEventArgs> hoodState;
         public event EventHandler<ValueSetEventArgs> trunkState;
 
-        private void raiseLeftDoorStateChanged(int state)
+        /*
+        private void raiseLeftDoorStateChanged(uint state)
         {
             if (leftDoorState != null)
             {
@@ -30,7 +31,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void raiseRigthDoorStateChanged(int state)
+        private void raiseRigthDoorStateChanged(uint state)
         {
             if (rigthDoorState != null)
             {
@@ -38,7 +39,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void raiseHoodStateChanged(int state)
+        private void raiseHoodStateChanged(uint state)
         {
             if (hoodState != null)
             {
@@ -46,15 +47,15 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void raiseTrunkStateChanged(int state)
+        private void raiseTrunkStateChanged(uint state)
         {
             if (trunkState != null)
             {
                 trunkState(this, new ValueSetEventArgs() { Id = 14, Value = state });
             }
-        }
+        }*/
 
-        private void raiseSuspensionStateChanged(int value)
+        private void raiseSuspensionStateChanged(uint value)
         {
             if (suspensionStateChanged != null)
             {
@@ -62,7 +63,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void raiseFanSpeedStateChanged(int value)
+        private void raiseFanSpeedStateChanged(uint value)
         {
             if (fanSpeedChanged != null)
             {
@@ -70,7 +71,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void raiseSpoilerModeChanged(int value)
+        private void raiseSpoilerModeChanged(uint value)
         {
             if (spoilerModeChanged != null)
             {
@@ -100,13 +101,13 @@ namespace baymax_connection_simulator
             switch(buff.SetValueSubCommand.Id)
             {
                 case 1:
-                    raiseFanSpeedStateChanged(buff.SetValueSubCommand.IValue);
+                    raiseFanSpeedStateChanged(buff.SetValueSubCommand.OtherValue);
                     break;
                 case 4:
-                    raiseSuspensionStateChanged(buff.SetValueSubCommand.IValue);
+                    raiseSuspensionStateChanged(buff.SetValueSubCommand.OtherValue);
                     break;
                 case 6:
-                    raiseSpoilerModeChanged(buff.SetValueSubCommand.IValue);
+                    raiseSpoilerModeChanged(buff.SetValueSubCommand.OtherValue);
                     break;
             }
         }
@@ -120,8 +121,8 @@ namespace baymax_connection_simulator
         {
 
         }
-        int _fanSpeed;
-        public int fanSpeed {
+        uint _fanSpeed;
+        public uint fanSpeed {
             get
             {
                 return _fanSpeed;
@@ -132,8 +133,7 @@ namespace baymax_connection_simulator
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 1;
-                buff.ValueSettedSubCommand.IValue = value;
-                _suspensionMode = value;
+                buff.ValueSettedSubCommand.OtherValue = value;
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -144,19 +144,19 @@ namespace baymax_connection_simulator
             }
         }
 
-        int _suspensionMode;
-        public int suspensionMode {
+        uint _suspensionMode;
+        public uint suspensionMode {
             get
             {
                 return _suspensionMode;
             }
             set
             {
+                _suspensionMode = value;
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 4;
-                buff.ValueSettedSubCommand.IValue = value;
-                _suspensionMode = value;
+                buff.ValueSettedSubCommand.OtherValue = value;                
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -172,8 +172,8 @@ namespace baymax_connection_simulator
             set;
         }
 
-        int _spoilerMode;
-        public int spoilerMode {
+        uint _spoilerMode;
+        public uint spoilerMode {
             get
             {
                 return _spoilerMode;
@@ -184,8 +184,7 @@ namespace baymax_connection_simulator
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 6;
-                buff.ValueSettedSubCommand.IValue = value;
-                _suspensionMode = value;
+                buff.ValueSettedSubCommand.OtherValue = value;
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {
@@ -206,8 +205,8 @@ namespace baymax_connection_simulator
             set;
         }
 
-        private int _batteryVoltage;
-        public int batteryVoltage
+        private uint _batteryVoltage;
+        public uint batteryVoltage
         {
             get
             {
@@ -219,7 +218,7 @@ namespace baymax_connection_simulator
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 9;
-                buff.ValueSettedSubCommand.IValue = value;
+                buff.ValueSettedSubCommand.VoltageValue = value;
                 _suspensionMode = value;
                 byte[] data;
                 using (var ms = new MemoryStream())
@@ -231,8 +230,8 @@ namespace baymax_connection_simulator
             }
         }
 
-        private int _batteryCurrent;
-        public int batteryCurrent
+        private uint _batteryCurrent;
+        public uint batteryCurrent
         {
             get
             {
@@ -244,8 +243,7 @@ namespace baymax_connection_simulator
                 ServerCommandBuff buff = new ServerCommandBuff();
                 buff.ValueSettedSubCommand = new ValueSettedSubCommand();
                 buff.ValueSettedSubCommand.Id = 10;
-                buff.ValueSettedSubCommand.IValue = value;
-                _suspensionMode = value;
+                buff.ValueSettedSubCommand.CurrentValue = value;
                 byte[] data;
                 using (var ms = new MemoryStream())
                 {

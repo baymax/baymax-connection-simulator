@@ -21,14 +21,13 @@ public static partial class SetValueSubCommandReflection {
   static SetValueSubCommandReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Ch5wcm90by9TZXRWYWx1ZVN1YkNvbW1hbmQucHJvdG8icQoSU2V0VmFsdWVT",
-          "dWJDb21tYW5kEgoKAmlkGAEgASgNEhAKBmlWYWx1ZRgCIAEoBUgAEhAKBmZW",
-          "YWx1ZRgDIAEoAkgAEhEKB3VpVmFsdWUYBCABKA1IABIOCgZ1c2VySWQYBSAB",
-          "KA1CCAoGdmFsdWVzYgZwcm90bzM="));
+          "Ch5wcm90by9TZXRWYWx1ZVN1YkNvbW1hbmQucHJvdG8iUAoSU2V0VmFsdWVT",
+          "dWJDb21tYW5kEgoKAmlkGAEgASgNEhQKCm90aGVyVmFsdWUYAiABKA1IABIO",
+          "CgZ1c2VySWQYAyABKA1CCAoGdmFsdWVzYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedCodeInfo(null, new pbr::GeneratedCodeInfo[] {
-          new pbr::GeneratedCodeInfo(typeof(global::SetValueSubCommand), global::SetValueSubCommand.Parser, new[]{ "Id", "IValue", "FValue", "UiValue", "UserId" }, new[]{ "Values" }, null, null)
+          new pbr::GeneratedCodeInfo(typeof(global::SetValueSubCommand), global::SetValueSubCommand.Parser, new[]{ "Id", "OtherValue", "UserId" }, new[]{ "Values" }, null, null)
         }));
   }
   #endregion
@@ -58,14 +57,8 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
     id_ = other.id_;
     userId_ = other.userId_;
     switch (other.ValuesCase) {
-      case ValuesOneofCase.IValue:
-        IValue = other.IValue;
-        break;
-      case ValuesOneofCase.FValue:
-        FValue = other.FValue;
-        break;
-      case ValuesOneofCase.UiValue:
-        UiValue = other.UiValue;
+      case ValuesOneofCase.OtherValue:
+        OtherValue = other.OtherValue;
         break;
     }
 
@@ -85,38 +78,18 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
     }
   }
 
-  /// <summary>Field number for the "iValue" field.</summary>
-  public const int IValueFieldNumber = 2;
-  public int IValue {
-    get { return valuesCase_ == ValuesOneofCase.IValue ? (int) values_ : 0; }
+  /// <summary>Field number for the "otherValue" field.</summary>
+  public const int OtherValueFieldNumber = 2;
+  public uint OtherValue {
+    get { return valuesCase_ == ValuesOneofCase.OtherValue ? (uint) values_ : 0; }
     set {
       values_ = value;
-      valuesCase_ = ValuesOneofCase.IValue;
-    }
-  }
-
-  /// <summary>Field number for the "fValue" field.</summary>
-  public const int FValueFieldNumber = 3;
-  public float FValue {
-    get { return valuesCase_ == ValuesOneofCase.FValue ? (float) values_ : 0F; }
-    set {
-      values_ = value;
-      valuesCase_ = ValuesOneofCase.FValue;
-    }
-  }
-
-  /// <summary>Field number for the "uiValue" field.</summary>
-  public const int UiValueFieldNumber = 4;
-  public uint UiValue {
-    get { return valuesCase_ == ValuesOneofCase.UiValue ? (uint) values_ : 0; }
-    set {
-      values_ = value;
-      valuesCase_ = ValuesOneofCase.UiValue;
+      valuesCase_ = ValuesOneofCase.OtherValue;
     }
   }
 
   /// <summary>Field number for the "userId" field.</summary>
-  public const int UserIdFieldNumber = 5;
+  public const int UserIdFieldNumber = 3;
   private uint userId_;
   public uint UserId {
     get { return userId_; }
@@ -129,9 +102,7 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
   /// <summary>Enum of possible cases for the "values" oneof.</summary>
   public enum ValuesOneofCase {
     None = 0,
-    IValue = 2,
-    FValue = 3,
-    UiValue = 4,
+    OtherValue = 2,
   }
   private ValuesOneofCase valuesCase_ = ValuesOneofCase.None;
   public ValuesOneofCase ValuesCase {
@@ -155,9 +126,7 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
       return true;
     }
     if (Id != other.Id) return false;
-    if (IValue != other.IValue) return false;
-    if (FValue != other.FValue) return false;
-    if (UiValue != other.UiValue) return false;
+    if (OtherValue != other.OtherValue) return false;
     if (UserId != other.UserId) return false;
     if (ValuesCase != other.ValuesCase) return false;
     return true;
@@ -166,9 +135,7 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
   public override int GetHashCode() {
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.IValue) hash ^= IValue.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.FValue) hash ^= FValue.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.UiValue) hash ^= UiValue.GetHashCode();
+    if (valuesCase_ == ValuesOneofCase.OtherValue) hash ^= OtherValue.GetHashCode();
     if (UserId != 0) hash ^= UserId.GetHashCode();
     hash ^= (int) valuesCase_;
     return hash;
@@ -183,20 +150,12 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
       output.WriteRawTag(8);
       output.WriteUInt32(Id);
     }
-    if (valuesCase_ == ValuesOneofCase.IValue) {
+    if (valuesCase_ == ValuesOneofCase.OtherValue) {
       output.WriteRawTag(16);
-      output.WriteInt32(IValue);
-    }
-    if (valuesCase_ == ValuesOneofCase.FValue) {
-      output.WriteRawTag(29);
-      output.WriteFloat(FValue);
-    }
-    if (valuesCase_ == ValuesOneofCase.UiValue) {
-      output.WriteRawTag(32);
-      output.WriteUInt32(UiValue);
+      output.WriteUInt32(OtherValue);
     }
     if (UserId != 0) {
-      output.WriteRawTag(40);
+      output.WriteRawTag(24);
       output.WriteUInt32(UserId);
     }
   }
@@ -206,14 +165,8 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
     if (Id != 0) {
       size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
     }
-    if (valuesCase_ == ValuesOneofCase.IValue) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(IValue);
-    }
-    if (valuesCase_ == ValuesOneofCase.FValue) {
-      size += 1 + 4;
-    }
-    if (valuesCase_ == ValuesOneofCase.UiValue) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(UiValue);
+    if (valuesCase_ == ValuesOneofCase.OtherValue) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(OtherValue);
     }
     if (UserId != 0) {
       size += 1 + pb::CodedOutputStream.ComputeUInt32Size(UserId);
@@ -232,14 +185,8 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
       UserId = other.UserId;
     }
     switch (other.ValuesCase) {
-      case ValuesOneofCase.IValue:
-        IValue = other.IValue;
-        break;
-      case ValuesOneofCase.FValue:
-        FValue = other.FValue;
-        break;
-      case ValuesOneofCase.UiValue:
-        UiValue = other.UiValue;
+      case ValuesOneofCase.OtherValue:
+        OtherValue = other.OtherValue;
         break;
     }
 
@@ -257,18 +204,10 @@ public sealed partial class SetValueSubCommand : pb::IMessage<SetValueSubCommand
           break;
         }
         case 16: {
-          IValue = input.ReadInt32();
+          OtherValue = input.ReadUInt32();
           break;
         }
-        case 29: {
-          FValue = input.ReadFloat();
-          break;
-        }
-        case 32: {
-          UiValue = input.ReadUInt32();
-          break;
-        }
-        case 40: {
+        case 24: {
           UserId = input.ReadUInt32();
           break;
         }

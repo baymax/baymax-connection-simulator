@@ -253,7 +253,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void changeSpoilerButton(int value)
+        private void changeSpoilerButton(uint value)
         {
             switch (value)
             {
@@ -274,7 +274,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void changeSuspensionButton(int value)
+        private void changeSuspensionButton(uint value)
         {
             switch (value)
             {
@@ -305,7 +305,7 @@ namespace baymax_connection_simulator
             }
         }
 
-        private void changeFanSpeedButton(int value)
+        private void changeFanSpeedButton(uint value)
         {
             switch (value)
             {
@@ -366,8 +366,8 @@ namespace baymax_connection_simulator
         {
             if (currentValueTextBlock.Text != "")
             {
-                int current;
-                bool success = int.TryParse(currentValueTextBlock.Text, out current);
+                uint current;
+                bool success = uint.TryParse(currentValueTextBlock.Text, out current);
                 if (success)
                 {
                     MessageBox.Show("current success " + current);
@@ -380,8 +380,8 @@ namespace baymax_connection_simulator
         {
             if (voltageValueTextBlock.Text != "")
             {
-                int voltage;
-                bool success = int.TryParse(voltageValueTextBlock.Text, out voltage);
+                uint voltage;
+                bool success = uint.TryParse(voltageValueTextBlock.Text, out voltage);
                 if (success)
                 {
                     protocol.batteryVoltage = voltage;

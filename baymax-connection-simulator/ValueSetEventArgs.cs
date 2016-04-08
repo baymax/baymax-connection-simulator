@@ -9,6 +9,6 @@ namespace baymax_connection_simulator
     class ValueSetEventArgs : EventArgs
     {
         public int Id { get; set; }
-        public int Value { get; set; }
+        public uint Value { get; set; }
     }
 }

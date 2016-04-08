@@ -21,14 +21,15 @@ public static partial class ValueSettedSubCommandReflection {
   static ValueSettedSubCommandReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CiFwcm90by9WYWx1ZVNldHRlZFN1YkNvbW1hbmQucHJvdG8iZAoVVmFsdWVT",
-          "ZXR0ZWRTdWJDb21tYW5kEgoKAmlkGAEgASgNEhAKBmlWYWx1ZRgCIAEoBUgA",
-          "EhAKBmZWYWx1ZRgDIAEoAkgAEhEKB3VpVmFsdWUYBCABKA1IAEIICgZ2YWx1",
-          "ZXNiBnByb3RvMw=="));
+          "CiFwcm90by9WYWx1ZVNldHRlZFN1YkNvbW1hbmQucHJvdG8ijwEKFVZhbHVl",
+          "U2V0dGVkU3ViQ29tbWFuZBIKCgJpZBgBIAEoDRIUCgpvdGhlclZhbHVlGAIg",
+          "ASgNSAASFgoMY3VycmVudFZhbHVlGAMgASgNSAASFgoMdm9sdGFnZVZhbHVl",
+          "GAQgASgNSAASGgoQdGVtcGVyYXR1cmVWYWx1ZRgFIAEoAkgAQggKBnZhbHVl",
+          "c2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedCodeInfo(null, new pbr::GeneratedCodeInfo[] {
-          new pbr::GeneratedCodeInfo(typeof(global::ValueSettedSubCommand), global::ValueSettedSubCommand.Parser, new[]{ "Id", "IValue", "FValue", "UiValue" }, new[]{ "Values" }, null, null)
+          new pbr::GeneratedCodeInfo(typeof(global::ValueSettedSubCommand), global::ValueSettedSubCommand.Parser, new[]{ "Id", "OtherValue", "CurrentValue", "VoltageValue", "TemperatureValue" }, new[]{ "Values" }, null, null)
         }));
   }
   #endregion
@@ -57,14 +58,17 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
   public ValueSettedSubCommand(ValueSettedSubCommand other) : this() {
     id_ = other.id_;
     switch (other.ValuesCase) {
-      case ValuesOneofCase.IValue:
-        IValue = other.IValue;
+      case ValuesOneofCase.OtherValue:
+        OtherValue = other.OtherValue;
         break;
-      case ValuesOneofCase.FValue:
-        FValue = other.FValue;
+      case ValuesOneofCase.CurrentValue:
+        CurrentValue = other.CurrentValue;
         break;
-      case ValuesOneofCase.UiValue:
-        UiValue = other.UiValue;
+      case ValuesOneofCase.VoltageValue:
+        VoltageValue = other.VoltageValue;
+        break;
+      case ValuesOneofCase.TemperatureValue:
+        TemperatureValue = other.TemperatureValue;
         break;
     }
 
@@ -84,33 +88,43 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     }
   }
 
-  /// <summary>Field number for the "iValue" field.</summary>
-  public const int IValueFieldNumber = 2;
-  public int IValue {
-    get { return valuesCase_ == ValuesOneofCase.IValue ? (int) values_ : 0; }
+  /// <summary>Field number for the "otherValue" field.</summary>
+  public const int OtherValueFieldNumber = 2;
+  public uint OtherValue {
+    get { return valuesCase_ == ValuesOneofCase.OtherValue ? (uint) values_ : 0; }
     set {
       values_ = value;
-      valuesCase_ = ValuesOneofCase.IValue;
+      valuesCase_ = ValuesOneofCase.OtherValue;
     }
   }
 
-  /// <summary>Field number for the "fValue" field.</summary>
-  public const int FValueFieldNumber = 3;
-  public float FValue {
-    get { return valuesCase_ == ValuesOneofCase.FValue ? (float) values_ : 0F; }
+  /// <summary>Field number for the "currentValue" field.</summary>
+  public const int CurrentValueFieldNumber = 3;
+  public uint CurrentValue {
+    get { return valuesCase_ == ValuesOneofCase.CurrentValue ? (uint) values_ : 0; }
     set {
       values_ = value;
-      valuesCase_ = ValuesOneofCase.FValue;
+      valuesCase_ = ValuesOneofCase.CurrentValue;
     }
   }
 
-  /// <summary>Field number for the "uiValue" field.</summary>
-  public const int UiValueFieldNumber = 4;
-  public uint UiValue {
-    get { return valuesCase_ == ValuesOneofCase.UiValue ? (uint) values_ : 0; }
+  /// <summary>Field number for the "voltageValue" field.</summary>
+  public const int VoltageValueFieldNumber = 4;
+  public uint VoltageValue {
+    get { return valuesCase_ == ValuesOneofCase.VoltageValue ? (uint) values_ : 0; }
     set {
       values_ = value;
-      valuesCase_ = ValuesOneofCase.UiValue;
+      valuesCase_ = ValuesOneofCase.VoltageValue;
+    }
+  }
+
+  /// <summary>Field number for the "temperatureValue" field.</summary>
+  public const int TemperatureValueFieldNumber = 5;
+  public float TemperatureValue {
+    get { return valuesCase_ == ValuesOneofCase.TemperatureValue ? (float) values_ : 0F; }
+    set {
+      values_ = value;
+      valuesCase_ = ValuesOneofCase.TemperatureValue;
     }
   }
 
@@ -118,9 +132,10 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
   /// <summary>Enum of possible cases for the "values" oneof.</summary>
   public enum ValuesOneofCase {
     None = 0,
-    IValue = 2,
-    FValue = 3,
-    UiValue = 4,
+    OtherValue = 2,
+    CurrentValue = 3,
+    VoltageValue = 4,
+    TemperatureValue = 5,
   }
   private ValuesOneofCase valuesCase_ = ValuesOneofCase.None;
   public ValuesOneofCase ValuesCase {
@@ -144,9 +159,10 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
       return true;
     }
     if (Id != other.Id) return false;
-    if (IValue != other.IValue) return false;
-    if (FValue != other.FValue) return false;
-    if (UiValue != other.UiValue) return false;
+    if (OtherValue != other.OtherValue) return false;
+    if (CurrentValue != other.CurrentValue) return false;
+    if (VoltageValue != other.VoltageValue) return false;
+    if (TemperatureValue != other.TemperatureValue) return false;
     if (ValuesCase != other.ValuesCase) return false;
     return true;
   }
@@ -154,9 +170,10 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
   public override int GetHashCode() {
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.IValue) hash ^= IValue.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.FValue) hash ^= FValue.GetHashCode();
-    if (valuesCase_ == ValuesOneofCase.UiValue) hash ^= UiValue.GetHashCode();
+    if (valuesCase_ == ValuesOneofCase.OtherValue) hash ^= OtherValue.GetHashCode();
+    if (valuesCase_ == ValuesOneofCase.CurrentValue) hash ^= CurrentValue.GetHashCode();
+    if (valuesCase_ == ValuesOneofCase.VoltageValue) hash ^= VoltageValue.GetHashCode();
+    if (valuesCase_ == ValuesOneofCase.TemperatureValue) hash ^= TemperatureValue.GetHashCode();
     hash ^= (int) valuesCase_;
     return hash;
   }
@@ -170,17 +187,21 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
       output.WriteRawTag(8);
       output.WriteUInt32(Id);
     }
-    if (valuesCase_ == ValuesOneofCase.IValue) {
+    if (valuesCase_ == ValuesOneofCase.OtherValue) {
       output.WriteRawTag(16);
-      output.WriteInt32(IValue);
+      output.WriteUInt32(OtherValue);
     }
-    if (valuesCase_ == ValuesOneofCase.FValue) {
-      output.WriteRawTag(29);
-      output.WriteFloat(FValue);
+    if (valuesCase_ == ValuesOneofCase.CurrentValue) {
+      output.WriteRawTag(24);
+      output.WriteUInt32(CurrentValue);
     }
-    if (valuesCase_ == ValuesOneofCase.UiValue) {
+    if (valuesCase_ == ValuesOneofCase.VoltageValue) {
       output.WriteRawTag(32);
-      output.WriteUInt32(UiValue);
+      output.WriteUInt32(VoltageValue);
+    }
+    if (valuesCase_ == ValuesOneofCase.TemperatureValue) {
+      output.WriteRawTag(45);
+      output.WriteFloat(TemperatureValue);
     }
   }
 
@@ -189,14 +210,17 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
     if (Id != 0) {
       size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
     }
-    if (valuesCase_ == ValuesOneofCase.IValue) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(IValue);
+    if (valuesCase_ == ValuesOneofCase.OtherValue) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(OtherValue);
     }
-    if (valuesCase_ == ValuesOneofCase.FValue) {
+    if (valuesCase_ == ValuesOneofCase.CurrentValue) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(CurrentValue);
+    }
+    if (valuesCase_ == ValuesOneofCase.VoltageValue) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(VoltageValue);
+    }
+    if (valuesCase_ == ValuesOneofCase.TemperatureValue) {
       size += 1 + 4;
-    }
-    if (valuesCase_ == ValuesOneofCase.UiValue) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(UiValue);
     }
     return size;
   }
@@ -209,14 +233,17 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
       Id = other.Id;
     }
     switch (other.ValuesCase) {
-      case ValuesOneofCase.IValue:
-        IValue = other.IValue;
+      case ValuesOneofCase.OtherValue:
+        OtherValue = other.OtherValue;
         break;
-      case ValuesOneofCase.FValue:
-        FValue = other.FValue;
+      case ValuesOneofCase.CurrentValue:
+        CurrentValue = other.CurrentValue;
         break;
-      case ValuesOneofCase.UiValue:
-        UiValue = other.UiValue;
+      case ValuesOneofCase.VoltageValue:
+        VoltageValue = other.VoltageValue;
+        break;
+      case ValuesOneofCase.TemperatureValue:
+        TemperatureValue = other.TemperatureValue;
         break;
     }
 
@@ -234,15 +261,19 @@ public sealed partial class ValueSettedSubCommand : pb::IMessage<ValueSettedSubC
           break;
         }
         case 16: {
-          IValue = input.ReadInt32();
+          OtherValue = input.ReadUInt32();
           break;
         }
-        case 29: {
-          FValue = input.ReadFloat();
+        case 24: {
+          CurrentValue = input.ReadUInt32();
           break;
         }
         case 32: {
-          UiValue = input.ReadUInt32();
+          VoltageValue = input.ReadUInt32();
+          break;
+        }
+        case 45: {
+          TemperatureValue = input.ReadFloat();
           break;
         }
       }
